@@ -1,0 +1,44 @@
+{% extends 'myapp/base.html' %}
+
+{% block page_title %}Blog{% endblock %}
+{% block nav-link-blog %}active{% endblock %}
+
+{% block content %}
+    
+    <h1 class="mt-5">Blog</h1>
+
+    {% include 'blog/includes/category_widget.html' with category_name=category_name category_list=category_list %}
+
+    <div class="alert alert-info" role="alert">
+      Showing <strong>{{ object_list|length }}</strong> post{{ object_list|pluralize}} {% if category_name %}from <strong>{{ category_name }}</strong>{% else %}.{% endif %}
+    </div>
+
+
+    {% if object_list %}
+      <div class="list-group">
+      {% for obj in object_list %}
+        <!-- begin::Post -->
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <a href="{% url 'blog:post_detail_view' obj.id %}">
+              <h5 class="mb-1">{{ obj.title|title }}</h5>
+            </a>
+            <small>Published: {{ obj.date_publish|timesince }} ago</small>
+          </div>
+          <a href="{% url 'blog:post_detail_view' obj.id %}"><p class="mb-1 md2html">{{ obj.body|safe|truncatewords_html:20 }} ...</p></a>
+          <div class="d-flex w-100 justify-content-between">
+            <small>Updated: {{ obj.date_update }}</small>
+            <small>
+              Written by: 
+              <a href="{% url 'blog:post_list_author' obj.author.name %}">{{ obj.author.name }}</a> 
+            </small>
+          </div>
+        </div>
+        <!-- end::Post -->
+      {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-primary" role="alert">No posts to show.</div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block page_title %}Blog{% endblock %}
+{% block nav-link-blog %}active{% endblock %}
+
+{% block content %}
+    
+    <h1 class="mt-5">Blog Post</h1>
+
+    {% include 'blog/includes/category_widget.html' with category_name=category_name category_list=category_list %}
+
+
+ <!-- begin::Post -->
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">        
+        <h5 class="mb-1">{{ object.title|title }}</h5>        
+        <small>Published: {{ object.date_publish|timesince }} ago</small>
+      </div>
+      <p class="mb-1 md2html">{{ object.body|safe }}</p>
+      <div class="d-flex w-100 justify-content-between">
+        <small> Updated: {{ object.date_update }} </small>
+        <small> Written by: 
+            <a href="{% url 'blog:post_list_author' object.author.name %}">{{ object.author.name }}</a>
+        </small>
+      </div>
+    </div>
+    <!-- end::Post -->
+
+{% endblock %}

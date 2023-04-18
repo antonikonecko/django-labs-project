@@ -1,0 +1,64 @@
+```{% extends 'myapp/base.html' %}
+{% load static %}
+{% block page_title %}Covid19{% endblock %}
+{% block nav-link-covid19 %}active{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class = "bg-primary bg-gradient col-sm-6 m-1 ">
+  <h1 class="text-light p-3 text-opacity-75"> Covid19 Summary</h1><br>
+</div>
+
+
+{% for key, value in Countries.items %}  
+  {% if key == activeSource %}
+    <a href="{% url 'covid19:index' key %}" class=" bg-primary btn m-1 mt-2 mb-2" > {{ value }} </a>
+  {% elif key != activeSource %}
+    <a href="{% url 'covid19:index' key %}" class=" bg-primary btn bg-gradient bg-opacity-75 m-1 mt-2 mb-2" > {{ value }} </a>  
+  {% endif %}
+   
+{% endfor %}
+
+<div class="container" style = "display: flex;">
+      <div class="card" style="width: 18rem;">
+        <div class="bg-primary card-header bg-gradient bg-opacity-75">
+          <h3>Global</h3>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="bg-warning list-group-item bg-opacity-50"><b>NewConfirmed:</b> {{ statisticsGlobal.NewConfirmed }}</li>
+          <li class="bg-warning list-group-item" style="--bs-bg-opacity: .9;"><b>TotalConfirmed:</b> {{ statisticsGlobal.TotalConfirmed }}</li>
+          <li class="bg-danger list-group-item bg-opacity-50"><b>NewDeaths:</b> {{ statisticsGlobal.NewDeaths }}</li>
+          <li class="bg-danger list-group-item bg-opacity-75"><b>TotalDeaths:</b> {{ statisticsGlobal.TotalDeaths }}</li>
+          <li class="bg-success list-group-item bg-opacity-50"><b>NewRecovered:</b> {{ statisticsGlobal.NewRecovered }}</li>
+          <li class="bg-success list-group-item bg-opacity-75"><b>TotalRecovered:</b> {{ statisticsGlobal.TotalRecovered }}</li>
+          <li class="list-group-item bg-light"><b>Date:</b> {{ statisticsGlobal.Date }}</li>
+          <li class="list-group-item list-group-item-info">Updated {{ updatedTimeGlobal|timesince }} ago</li>
+        </ul>    
+    </div>
+      <div class="card" style="width: 18rem;">
+        <div class="bg-primary card-header bg-gradient bg-opacity-50">
+          <h3>{{ statistics.Country }}</h3>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="bg-warning list-group-item bg-opacity-50"><b>NewConfirmed:</b> {{ statistics.NewConfirmed }}</li>
+          <li class="bg-warning list-group-item" style="--bs-bg-opacity: .9;"><b>TotalConfirmed:</b> {{ statistics.TotalConfirmed }}</li>
+          <li class="bg-danger list-group-item bg-opacity-50"><b>NewDeaths:</b> {{ statistics.NewDeaths }}</li>
+          <li class="bg-danger list-group-item bg-opacity-75"><b>TotalDeaths:</b> {{ statistics.TotalDeaths }}</li>
+          <li class="bg-success list-group-item bg-opacity-50"><b>NewRecovered:</b> {{ statistics.NewRecovered }}</li>
+          <li class="bg-success list-group-item bg-opacity-75"><b>TotalRecovered:</b> {{ statistics.TotalRecovered }}</li>
+          <li class="list-group-item bg-light"><b>Date:</b> {{ statistics.Date }}</li>
+          <li class="list-group-item list-group-item-info">Updated {{ updatedTimeCountry|timesince }} ago</li>
+        </ul>
+  </div>
+</div>
+
+
+
+
+
+
+	
+{% endblock %}```
